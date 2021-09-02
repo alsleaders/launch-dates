@@ -1,10 +1,10 @@
 # launch-dates
 
-##User Stories
+## User Stories
 - As a user, I want to be able to view all of the SpaceX launches between two dates I decide.
 - As a user, I want to be able to sort the SpaceX launches by their launch date (both ascending or descending).
 
-##What we're looking for
+## What we're looking for
 - How well you document code
 - How you architect a fresh React/Redux project
 - How you set up Redux and if you follow best practices
@@ -13,7 +13,7 @@
 - How well your website runs against Google Lighthouse auditsRequirements
 - The UI/UX is up to you, feel free to be as creative as you'd like! Rest assured that you won't be penalized at all if you completely forgo styling as we know it can be time-consuming.
 
-##Steps
+## Steps
 - Create the boilerplate (we recommend using something like create-react-app).
 - Update the website's title, meta tags, and favicon (be creative!).
 - Set up any architecture you want, but you must use and implement Redux (and ideally utilize one or more Redux middleware libraries).
@@ -26,7 +26,7 @@
 - Please git commit early and often. Also, please do not squash commits as we enjoy seeing the evolution of the project!
 
 
-##Dependencies you should include
+## Dependencies you should include
 - react
 - prop-types
 - redux
