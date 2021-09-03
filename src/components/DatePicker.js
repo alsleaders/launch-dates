@@ -13,11 +13,12 @@ export function DatePicker() {
     },
   });
 
-  const API = "https://api.spacexdata.com/v4/launches";
+  const API =
+    "https://api.spacexdata.com/v3/launches?limit=10&filter=start=2021-01-01&end=2021-08-25";
 
   useEffect(() => {
     axios.get(API).then((result) => {
-      console.log(result);
+      console.log(result.data);
       setList(result.data);
     }, []);
   }, []);
