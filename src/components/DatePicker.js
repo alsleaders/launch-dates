@@ -1,7 +1,8 @@
-import { addDays } from "date-fns";
-import { DateRangePicker } from "react-date-range";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { addDays } from "date-fns";
+import { DateRangePicker } from "react-date-range";
+import ListItem from "./ListItem";
 
 export function DatePicker() {
   const [list, setList] = useState([]);
@@ -13,8 +14,7 @@ export function DatePicker() {
     },
   });
 
-  const API =
-    "https://api.spacexdata.com/v3/launches?limit=10&filter=start=2021-01-01&end=2021-08-25";
+  const API = "https://api.spacexdata.com/v3/launches?limit=10";
 
   useEffect(() => {
     axios.get(API).then((result) => {
@@ -35,6 +35,15 @@ export function DatePicker() {
         ranges={[state.selection]}
       />
       <button>Search</button>
+      <div>
+        {list.map((item) => {
+          return (
+            <>
+              <ListItem name={item.mission_name} />
+            </>
+          );
+        })}
+      </div>
     </div>
   );
 }
