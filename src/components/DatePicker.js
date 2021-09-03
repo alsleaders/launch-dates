@@ -15,8 +15,8 @@ export function DatePicker() {
   const API = "https://api.spacexdata.com/v4/launches";
 
   useEffect(() => {
-    fetch({ API }).then((res) => {
-      console.log(res);
+    fetch("https://api.spacexdata.com/v4/launches").then((response) => {
+      console.log(response);
     });
   });
 
