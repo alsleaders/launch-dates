@@ -16,7 +16,7 @@ export function DatePicker() {
       key: "selection",
     },
   });
-  const API = `https://api.spacexdata.com/v3/launches${limit}${dates}`;
+  const API = "https://api.spacexdata.com/v3/launches" + limit + dates;
 
   const toggleShow = () => setShowList(!showList);
   const getData = () => {
@@ -26,25 +26,17 @@ export function DatePicker() {
     }, []);
   };
 
-  const handleDates = (state) => {
+  const search = (state) => {
     let formattedStartDate = state.selection.startDate
       .toISOString()
       .split("T")[0];
-    let formattedEndDate = state.selection.endDate.toISOString().split("T")[0];
-    console.log(formattedStartDate);
-    console.log(formattedEndDate);
-    setDates(`start=${formattedStartDate}&end=${formattedEndDate}`);
+    //.replaceAll("/", "-");
+    let formattedEndDate = state.selection.endDate.toISOString();
+    //.replaceAll("/", "-");
+    console.log(formattedStartDate.split("T")[0]);
+    console.log(formattedEndDate.split("T")[0]);
+    setDates("?start=" + formattedStartDate + "&end=" + formattedEndDate);
     console.log({ dates });
-    if (limit.length > 0 && dates.length > 0) {
-      setDates(`&${dates}`);
-    }
-    if (limit.length < 1) {
-      setDates("?" + dates);
-    }
-  };
-
-  const search = (state) => {
-    handleDates(state);
     toggleShow();
     console.log(API);
     getData();
