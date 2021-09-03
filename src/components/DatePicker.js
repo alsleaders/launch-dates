@@ -5,6 +5,7 @@ import { DateRangePicker } from "react-date-range";
 import ListItem from "./ListItem";
 
 export function DatePicker() {
+  const [showList, setShowList] = useState(false);
   const [list, setList] = useState([]);
   const [state, setState] = useState({
     selection: {
@@ -13,6 +14,8 @@ export function DatePicker() {
       key: "selection",
     },
   });
+
+  const toggleShow = () => setShowList(!showList);
 
   const API = "https://api.spacexdata.com/v3/launches?limit=10";
 
@@ -25,25 +28,38 @@ export function DatePicker() {
 
   return (
     <div>
-      <DateRangePicker
-        onChange={(item) => setState({ ...state, ...item })}
-        months={1}
-        minDate={addDays(new Date(), -300)}
-        maxDate={addDays(new Date(), 900)}
-        direction="vertical"
-        scroll={{ enabled: true }}
-        ranges={[state.selection]}
-      />
-      <button>Search</button>
-      <div>
-        {list.map((item) => {
-          return (
-            <>
-              <ListItem name={item.mission_name} />
-            </>
-          );
-        })}
-      </div>
+      {!showList ? (
+        <div>
+          <div>
+            <DateRangePicker
+              onChange={(item) => setState({ ...state, ...item })}
+              months={1}
+              minDate={addDays(new Date(), -300)}
+              maxDate={addDays(new Date(), 900)}
+              direction="vertical"
+              scroll={{ enabled: true }}
+              ranges={[state.selection]}
+            />
+          </div>
+          <button className="button" onClick={() => toggleShow()}>
+            Search
+          </button>
+        </div>
+      ) : null}
+      {showList ? (
+        <div>
+          {list.map((item) => {
+            return (
+              <>
+                <ListItem name={item.mission_name} />
+              </>
+            );
+          })}
+          <button className="button" onClick={() => toggleShow()}>
+            Reset
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
