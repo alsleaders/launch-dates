@@ -8,6 +8,7 @@ export function DatePicker() {
   const [showList, setShowList] = useState(false);
   const [limit, setLimit] = useState("");
   const [list, setList] = useState([]);
+  const [dates, setDates] = useState("");
   const [state, setState] = useState({
     selection: {
       startDate: new Date(),
@@ -15,7 +16,7 @@ export function DatePicker() {
       key: "selection",
     },
   });
-  const API = `https://api.spacexdata.com/v3/launches${limit}`;
+  const API = `https://api.spacexdata.com/v3/launches${limit}${dates}`;
 
   const toggleShow = () => setShowList(!showList);
   const getData = () => {
@@ -25,13 +26,33 @@ export function DatePicker() {
     }, []);
   };
 
-  const search = () => {
+  const handleDates = (state) => {
+    let formattedStartDate = state.selection.startDate
+      .toISOString()
+      .split("T")[0];
+    let formattedEndDate = state.selection.endDate.toISOString().split("T")[0];
+    console.log(formattedStartDate);
+    console.log(formattedEndDate);
+    setDates(`start=${formattedStartDate}&end=${formattedEndDate}`);
+    console.log({ dates });
+    if (limit.length > 0 && dates.length > 0) {
+      setDates(`&${dates}`);
+    }
+    if (limit.length < 1) {
+      setDates("?" + dates);
+    }
+  };
+
+  const search = (state) => {
+    handleDates(state);
     toggleShow();
+    console.log(API);
     getData();
   };
 
   const reset = () => {
     setLimit("");
+    setDates("");
     toggleShow();
   };
 
@@ -55,14 +76,14 @@ export function DatePicker() {
             <DateRangePicker
               onChange={(item) => setState({ ...state, ...item })}
               months={1}
-              minDate={addDays(new Date(), -10)}
-              maxDate={new Date()}
+              minDate={addDays(new Date(), -300)}
+              maxDate={addDays(new Date(), 900)}
               direction="vertical"
               scroll={{ enabled: true }}
               ranges={[state.selection]}
             />
           </div>
-          <button className="button" onClick={() => search()}>
+          <button className="button" onClick={() => search(state)}>
             Search
           </button>
         </div>
@@ -72,7 +93,7 @@ export function DatePicker() {
           {list.map((item) => {
             return (
               <>
-                <ListItem name={item.mission_name} />
+                <ListItem key={item.flight_number} name={item.mission_name} />
               </>
             );
           })}

@@ -7,11 +7,11 @@ class Footer extends Component {
         <span>
           Made with{" "}
           <span>
-            <i class="fas fa-rocket"></i>
+            <i className="fas fa-rocket"></i>
           </span>{" "}
           and{" "}
           <span>
-            <i class="fas fa-coffee"></i>
+            <i className="fas fa-coffee"></i>
           </span>{" "}
           by AL in 2021
         </span>
