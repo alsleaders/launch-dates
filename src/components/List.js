@@ -1,5 +1,6 @@
 import React from "react";
 import ListItem from "./ListItem";
+import Footer from "./Footer";
 
 export function List() {
   return (

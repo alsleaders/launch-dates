@@ -6,6 +6,7 @@ import ListItem from "./ListItem";
 
 export function DatePicker() {
   const [showList, setShowList] = useState(false);
+  const [limit, setLimit] = useState("");
   const [list, setList] = useState([]);
   const [state, setState] = useState({
     selection: {
@@ -14,34 +15,54 @@ export function DatePicker() {
       key: "selection",
     },
   });
+  const API = `https://api.spacexdata.com/v3/launches${limit}`;
 
   const toggleShow = () => setShowList(!showList);
-
-  const API = "https://api.spacexdata.com/v3/launches?limit=10";
-
-  useEffect(() => {
+  const getData = () => {
     axios.get(API).then((result) => {
       console.log(result.data);
       setList(result.data);
     }, []);
+  };
+
+  const search = () => {
+    toggleShow();
+    getData();
+  };
+
+  const reset = () => {
+    setLimit("");
+    toggleShow();
+  };
+
+  useEffect(() => {
+    setShowList(false);
+    //getData();
   }, []);
 
   return (
     <div>
       {!showList ? (
         <div>
+          <button
+            alt="This is a good idea because there might be a lot of results"
+            className="button"
+            onClick={() => setLimit("?limit=10")}
+          >
+            Limit 10
+          </button>
           <div>
             <DateRangePicker
               onChange={(item) => setState({ ...state, ...item })}
               months={1}
-              minDate={addDays(new Date(), -300)}
-              maxDate={addDays(new Date(), 900)}
+              minDate={addDays(new Date(), -10)}
+              maxDate={new Date()}
               direction="vertical"
               scroll={{ enabled: true }}
               ranges={[state.selection]}
             />
           </div>
-          <button className="button" onClick={() => toggleShow()}>
+          <button className="button" onClick={() => search()}>
             Search
           </button>
         </div>
@@ -55,7 +76,7 @@ export function DatePicker() {
               </>
             );
           })}
-          <button className="button" onClick={() => toggleShow()}>
+          <button className="button" onClick={() => reset()}>
             Reset
           </button>
         </div>
