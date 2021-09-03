@@ -1,6 +1,7 @@
 import { addDays } from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export function DatePicker() {
   const [list, setList] = useState([]);
@@ -15,10 +16,11 @@ export function DatePicker() {
   const API = "https://api.spacexdata.com/v4/launches";
 
   useEffect(() => {
-    fetch("https://api.spacexdata.com/v4/launches").then((response) => {
-      console.log(response);
-    });
-  });
+    axios.get(API).then((result) => {
+      console.log(result);
+      setList(result.data);
+    }, []);
+  }, []);
 
   return (
     <div>
