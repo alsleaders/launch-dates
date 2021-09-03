@@ -5,11 +5,12 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "./App.css";
 import { DatePicker } from "./components/DatePicker";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="App-header">
         {/* <img src={spaceShip} className="App-logo" alt="logo" /> */}
         <DatePicker />
         {/* <p>
@@ -23,7 +24,8 @@ function App() {
         >
           Learn React
         </a> */}
-      </header>
+      </div>
+      <Footer />
     </div>
   );
 }
